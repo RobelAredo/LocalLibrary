@@ -21,15 +21,12 @@ function getMostCommonGenres(books) {
     return acc;
   }, {})
 
-  genresKeys = Object.keys(genres);
-  genres = genresKeys.map(genreKey => {return {"name" : genreKey, "count" : genres[genreKey]}});
-  genres.sort((genreA, genreB) => genreB.count - genreA.count);
-
-  return genres.slice(0,5);
-  // {historical : 3, fiction : 1, Thiller : 2}
-  // [historical, fiction, Thriller]
-  //     V           V         V  
-  // [{name: historical, counts: 3}, ]
+  mostCommon = []
+  for(genreKey in genres){
+    mostCommon.push({"name" : genreKey, "count" : genres[genreKey]})
+  }
+  mostCommon.sort((genreA, genreB) => genreB.count - genreA.count);
+  return mostCommon.slice(0,5);
 }
 
 function getMostPopularBooks(books) {
@@ -48,16 +45,18 @@ function getMostPopularAuthors(books, authors) {
     return acc;
   }, {})
 
-  rankKeys = Object.keys(authorRanking);
-  authorRanking = rankKeys.map(authorName => {return {"name" : authorName, "count" : authorRanking[authorName]}});
-  authorRanking.sort((authorA, authorB) => authorB.count - authorA.count);
-
-  return authorRanking.slice(0,5);
+  let mostPopular = [];
+  for(authorName in authorRanking) {
+    mostPopular.push({"name" : authorName, "count" : authorRanking[authorName]});
+  }
+  mostPopular.sort((authorA, authorB) => authorB.count - authorA.count);
+  return mostPopular.slice(0,5);
 }
 
 function objectToName(authors, book){
   let authorName = authors.find(author => author.id == book.authorId).name
-  return authorName.first + " " + authorName.last
+  let {first, last} = authorName;
+  return first + " " + last
 }
 
 module.exports = {

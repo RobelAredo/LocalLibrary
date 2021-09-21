@@ -1,5 +1,7 @@
+const {findObjectId} = require("./books.js");
+
 function findAccountById(accounts, id) {
-  return accounts.find(account => id == account.id);
+  return findObjectId(accounts, id);
 }
 
 function sortAccountsByLastName(accounts) {
