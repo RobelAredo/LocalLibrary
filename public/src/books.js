@@ -1,11 +1,13 @@
+const {findAccountById} = require("./accounts.js")
+
 function findAuthorById(authors, id) {
-  return findObjectId(authors, id);
+  return findObjectById(authors, id);
 }
 function findBookById(books, id) {
-  return findObjectId(books, id);
+  return findObjectById(books, id);
 }
 
-function findObjectId(objects, id) {
+function findObjectById(objects, id) {
   return objects.find(object => object.id == id);
 }
 
@@ -21,16 +23,17 @@ function partitionBooksByBorrowedStatus(books) {
 }
 
 function getBorrowersForBook(book, accounts) {
+  const matchAccount = findObjectById;
   return book.borrows.slice(0,10).map(borrowed => {
-    let {returned} = borrowed;
-    return {...accounts.find(account => account.id == borrowed.id), returned};
+    let {returned, id} = borrowed;
+    return {...matchAccount(accounts, id), returned};
   });
 }
 
 module.exports = {
   findAuthorById,
   findBookById,
-  findObjectId,
+  findObjectById,
   partitionBooksByBorrowedStatus,
   getBorrowersForBook,
 };
